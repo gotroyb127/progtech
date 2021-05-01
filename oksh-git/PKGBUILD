@@ -1,0 +1,29 @@
+#
+pkgname=oksh-git
+pkgver=6.8.1
+pkgrel=1
+url="https://github.com/gotroyb127/oksh/"
+pkgdesc="Ported version of ksh from OpenBSD installed as ksh"
+license=('GPL3')
+depends=('glibc' 'ncurses')
+makedepends=('git')
+conflicts=('ksh' 'pdksh')
+arch=('i686' 'x86_64')
+source=("git+https://github.com/gotroyb127/oksh.git")
+md5sums=('SKIP')
+
+build() {
+  cd "$srcdir/${pkgname%-git}"
+
+  ./configure --bindir=/usr/bin --mandir=/usr/share/man/ --enable-ksh
+
+  make
+}
+
+package() {
+  cd "$srcdir/${pkgname%-git}"
+
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:
